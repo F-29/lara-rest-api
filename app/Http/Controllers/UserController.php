@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\RegisterUserEvent;
 use App\Http\Requests\user\CreateRequest;
 use App\Http\Requests\user\UpdateRequest;
 use App\Http\Resources\UserResourceCollection;
@@ -39,11 +40,14 @@ class UserController extends Controller
      */
     public function create(CreateRequest $request)
     {
-        return User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt((string)$request->password),
         ]);
+        event(new RegisterUserEvent($user));
+
+        return $user;
     }
 
     /**

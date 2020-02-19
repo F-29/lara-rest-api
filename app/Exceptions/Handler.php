@@ -104,7 +104,7 @@ class Handler extends ExceptionHandler
     private function _internalServerError(Exception $exception, int $code)
     {
         return response([
-            'message' => $code == 500 ? 'خطایی در سرور رخ داده' . " : " . (string)$exception : $exception->getMessage(),
+            'message' => $code == 500 ? 'there has been an error in the server side' . " : " . (string)$exception : $exception->getMessage(),
         ], $code);
     }
 
