@@ -3,6 +3,10 @@
 namespace App;
 
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Events\UserCreatedEvent;
+use App\Events\UserCreatingEvent;
+use App\Events\UserSavingEvent;
+use App\Events\UserUpdatedEvent;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -48,6 +52,17 @@ class User extends Authenticatable
         'password',
         'api_token',
     ];
+
+    // retrieved, creating, created, updating, updated,
+    // saving, saved, deleting,  deleted, restoring, restored
+    protected $dispatchesEvents = [
+        'saving' => UserSavingEvent::class,
+        'creating' => UserCreatingEvent::class,
+        'created' => UserCreatedEvent::class,
+        'updated' => UserUpdatedEvent::class
+    ];
+
+    protected $table = "users";
 
     /**
      * The attributes that should be hidden for arrays.
